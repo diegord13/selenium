@@ -1,8 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-import files
-import files3
 import glob
 import pandas as pd
 
@@ -39,13 +37,17 @@ for filename in all_files:
 
         time.sleep(3)
         try:
-            sel2 = driver.find_elements_by_class_name()
+
             sel2 = driver.find_element("xpath", "//*/div/div/div[2]/div/div[2]/div[3]/div/p")
-            print(sel2.text)
+            lista[cedulas[i]]=sel2.text
+
 
         except:
             pass
-        #print(sel2)
         driver.close()
+
+df = pd.DataFrame([[key, lista[key]] for key in lista.keys()], columns=['Cedula', 'Calificacion'])
+df.to_excel('SisbenCalificacion.xlsx')
+
 
 
